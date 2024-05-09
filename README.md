@@ -18,8 +18,14 @@ Web server is powered by HTTP server :
 2) determines response after checking
 3) sends response to web  client (may include data, e.g. HTML stored on webserver)
 
-### TCP
-Connection-based protocol used for HTTP servers. It guarantees the integrity of the data being communicated over a network (compared to UDP which is connectionless).
+### TCP (Transmission Control Protocol)
+- Operates at "transport layer" of internet model - this sits above the "network layer" which is IP.
+- Connection-based protocol used for HTTP servers. It guarantees the integrity of the data being communicated over a network (compared to UDP which is connectionless).
+- TCP ensure packet delivery by assigning a sequence number to each byte sent, and receiver acknowledges it, specifying the expected sequence number for the next packet.
+- TCP detects lost, duplicated or out of order packets, and requests re-transmission of lost data, or rearranges data. Can incur long delays (optimises accuracy over timely delivery).
+- Positive acknowledgement with re-transmission: receiver required to respond with acknowledgement message it received the data. Sender keeps a record of each sent packet and maintains a timer from when the packet was sent. Sender re-transmits a packet if timer expires before receiving the acknowledgement.
+- TCP divides data into "segments" which IP then handles the delivery of. TCP layer on client side re-assembles packets and ensures correct and error-free ordering for the receiving application.
+
 
 ### Ports & Sockets
 - TCP Socket is an endpoint *instance* defined by *IP address* and a *port*. Used in context of a TCP connection or a listening state. Ports differentiate multiple endpoints on a given network address.
@@ -37,5 +43,5 @@ A **socket** (e.g. 10.1.1.2, tcp, port1030) consists of
 
 A **port** (e.g. 1030) is between 1 and 65535 inclusive, and is a logical gate in a device. Every connnection between client/server requires a unique socket.
 
-     
-
+## Implementation
+This project will be using the Berkeley Soockets API (BSD Sockets) for simplicity and compatibility with standard C++. I am also programming on MacOS which supports BSD sockets natively so it can be used directly without any additional setup or libraries. A client/server architecture is mandatory for BSD sockets - connections established using both TCP and UDP.
