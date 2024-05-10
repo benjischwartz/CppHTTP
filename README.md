@@ -44,4 +44,16 @@ A **socket** (e.g. 10.1.1.2, tcp, port1030) consists of
 A **port** (e.g. 1030) is between 1 and 65535 inclusive, and is a logical gate in a device. Every connnection between client/server requires a unique socket.
 
 ## Implementation
-This project will be using the Berkeley Soockets API (BSD Sockets) for simplicity and compatibility with standard C++. I am also programming on MacOS which supports BSD sockets natively so it can be used directly without any additional setup or libraries. A client/server architecture is mandatory for BSD sockets - connections established using both TCP and UDP.
+
+### Libraries
+This project will be using the POSIX sockets API (a standardized interface for networking communication). It's available on a wide range of Unix-like systems, and for our purposes (using MacOS) this works. The sockets API supports both TCP and UDP. The API can be used with C++.
+We will use the "Sys/socket" and "Arpa/inet" libraries.
+
+### Creating a socket
+The ```socket``` API takes three parameters:
+```int socket(int domain, int type, int protocol)```
+1) domain: is the communication domain - we will use ```AF_INET``` for IPv4 Protocols.
+2) type: type of communication structure socket will allow - we will use ```SOCK_STREAM``` which allows reliable, full-duplex (both readable and writable) byte streams.
+3) protocol: specifies protocol socket will use - there is only one that supports ```SOCK_STREAM``` so we set this to ```0```.
+
+
